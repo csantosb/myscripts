@@ -1,0 +1,44 @@
+* MY SCRIPTS
+
+Set of global purpose bash scripts I have developed  over the years. They are adapted to my personal
+workflow but hopefully might be used by others.
+
+** Awesome-maildir-alert
+
+This script checks the availability of new mail in a set of maildir folders.
+
+It  is intended  to  be used  under awesome  window  manager, but  can  be easily  adapted to  other
+configurations. When new mail hits the 'new' folder under 'account/inbox' it updates the text string
+of  a 'textbox'  in  an awesome  widget.   This way,  new mail  presence  may be  checked  out at  a
+glimpse. Additionally, it displays a notification alert  containing the account name, as well as the
+'From:' and 'Subject:' fields of new arriving  mails. Finally, it uses helper notifiers (checkgmail,
+gnubiff, ...) to make new  mails more evident. This only makes sense as  I am using `offlineimap` to
+sync INBOX  IMAP folder with local  Maildir. When new mail  arrives, it stays locally  and remotelly
+until I remove it.
+
+*** Install and use
+
+Place the script somewhere in your path and add this to your rc.lua configuration file
+
+#+BEGIN_SRC lua
+-- mail textbox widget
+mymailtextbox = wibox.widget.textbox()
+mymailtextbox:set_markup('<span color="white">[ No mail ]</span> ')
+
+-- Check for new mail every 60 seconds
+mytimer = timer({ timeout = 60 })
+mytimer:connect_signal("timeout", function() awful.util.spawn_with_shell("awesome-maildir-alert.sh") end)
+mytimer:start()
+#+END_SRC
+
+It uses a  timer to run the  script every 60 seconds.  Finally, double check for  paths of maildirs,
+icons, etc.
+
+** Helping out
+
+If you want  to help out, help is much  appreciated. Open an issue or check  out the existing issues
+list for some ideas on what might need updating/fixing.
+
+** License
+
+Licensed under the GNU GENERAL PUBLIC LICENSE v3. See accompanying license file.
