@@ -26,8 +26,9 @@ mymailtextbox = wibox.widget.textbox()
 mymailtextbox:set_markup('<span color="white">[ No mail ]</span> ')
 
 -- Check for new mail every 60 seconds
+awful.util.spawn_with_shell('awesome-maildir-alert.sh "reset"')
 mytimer = timer({ timeout = 60 })
-mytimer:connect_signal("timeout", function() awful.util.spawn_with_shell("awesome-maildir-alert.sh") end)
+mytimer:connect_signal("timeout", function() awful.util.spawn_with_shell('awesome-maildir-alert.sh') end)
 mytimer:start()
 #+END_SRC
 

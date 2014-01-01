@@ -8,11 +8,14 @@
 # Header of the string to display in awesome bar
 printf -v texto "mymailtextbox:set_markup('[ <span color=\"white\">Mail</span> "
 
+default_action=$1
+
 call_account() {
 
     # save input arguments in variables
     account_name=$1
     account_alias=$2
+    action=$3
 
     # kind of notifier following account
     case $account_name in
@@ -32,10 +35,16 @@ call_account() {
     # where to store number of new mails: useful to compare next check
     printf -v file_name "/tmp/%s" $account_name
 
-    # first call just create files on disk with 0
+    # reset action
+    if ([ "$action" == "reset" ]); then
+        echo 0 > $file_name
+        return
+    fi
+
+    # security: if nb of old mails file doesn't exist, create it
     if [ ! -f $file_name ]; then
         echo 0 > $file_name
-        exit
+        return
     fi
 
     # nb of files in 'new' folder of the respective account
@@ -57,6 +66,9 @@ call_account() {
     pid=$2
 
     # Desktop notification: criteria is increase in nb of mails relative to previous check
+    # echo $account_name
+    # echo "$nb_files"
+    # echo "$old_nb_files"
     if ([ "$nb_files" -gt "$old_nb_files" ]);
     then
         # launch notification for all new mails in folder
@@ -107,11 +119,11 @@ call_account() {
 }
 
 # call previous function for all accounts
-call_account "inventati" "i"
-call_account "iphc" "h"
-call_account "otra" "o"
-call_account "curro" "u"
-call_account "reyes" "r"
+call_account "inventati" "i" $default_action
+call_account "iphc" "h" $default_action
+call_account "otra" "o" $default_action
+call_account "curro" "u" $default_action
+call_account "reyes" "r" $default_action
 
 # close the text string
 printf -v texto "$texto ]')"
