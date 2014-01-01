@@ -3,6 +3,20 @@
 Set of global purpose bash scripts I have developed  over the years. They are adapted to my personal
 workflow but hopefully might be used by others.
 
+** Sb (secure-box)
+
+Mount and unmount  a secure folder locally. Based  on the use of 'tcplay' instead  of truecrypt, and
+the arch wiki article along with jason ryan blog entry.
+
+*** Install and use
+
+Place the script somewhere in the path and alias it
+
+#+BEGIN_SRC
+alias sb_open='sudo sb.sh open'
+alias sb_close='sudo sb.sh close'
+#+END_SRC
+
 ** Awesome-maildir-alert
 
 This script checks the availability of new mail in a set of maildir folders.

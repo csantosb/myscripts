@@ -49,7 +49,7 @@ call_account() {
 
     # nb of files in 'new' folder of the respective account
     # previous
-    old_nb_files=`more $file_name`
+    old_nb_files=`less $file_name`
     # current
     nb_files=`find $HOME/Dropbox/Maildir/$account_name/inbox/new/ -type f | wc -l`
     # overwrite old value
