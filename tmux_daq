@@ -1,0 +1,43 @@
+#!/bin/bash
+
+_mymachine="$(uname -n)"
+
+tmux has-session -t daq
+if [ $? != 0 ]
+then
+    tmux new-session -s daq -n library -d "TERMCMD=xterm-256color && ranger ~/unidad_j/eclipse_workspace_lin/FrontPanel/Release"
+    tmux new-window -n software -t daq "TERMCMD=xterm-256color && ranger ~/unidad_j/eclipse_workspace_lin/PyFrontPanel/src"
+    tmux new-window -n firmware -t daq "TERMCMD=xterm-256color && ranger ~/Documents/ciemat/FrontPanel_423/ISE_Projects/FrontPanel_XEM6006-LX16_ise_14_2"
+    tmux new-window -n ipython -t daq "cd ~/unidad_j/eclipse_workspace_lin/PyFrontPanel/src ; ipython"
+    # tmux send-keys -t daq "ranger ~/unidad_j/eclipse_workspace_lin/FrontPanel_423/Release" C-m C-l ll C-m
+    # tmux send-keys -t daq "ranger ~/unidad_j/eclipse_workspace_lin/PyFrontPanel/src" C-m C-l ll C-m
+    # tmux send-keys -t daq "ranger ~/Documents/ciemat/FrontPanel_423/ISE_Projects/FrontPanel_XEM6006-LX16_ise_14_2" C-m C-l ll C-m
+    # tmux new-window -n ise -t daq 
+    # tmux send-keys -t daq "source ~/Dropbox/scripts/ise14_2_64.sh" C-m 
+    # tmux send-keys -t daq "ise /home/csantos/Documents/ciemat/FrontPanel_423/ISE_Projects/FrontPanel_XEM6006-LX16_ise_14_2/xem_6006/xem_6006.xise &" 
+    # tmux new-session -s mail -n mel_CIEMAT -d "mutt -F $HOME/.mutt/muttrc_ciemat" 
+    # tmux split-window -v -p 50 -t daq 
+    # tmux split-window -h -t mail "mutt -F $HOME/.mutt/muttrc_otra"
+    # tmux select-pane -U -t mail
+    # tmux select-window -t mail:1
+
+    # tmux send-keys -t mail:1.2 'mp' C-m
+    # tmux select-layout -t mail main-horizontal
+fi
+lxterminal --command="tmux attach -t daq"
+
+
+
+
+
+
+
+
+
+#  .even-horizontal stacks all panes horizontally, left to right.
+#  .even-vertical stacks all panes vertically, top to bottom.
+#  .main-horizontal creates one larger pane on the top and smaller panes underneath
+#  .main-vertical creates one large pane on the left side of the screen, and stacks
+#  the rest of the panes vertically on the right
+#  .tiled arranges all panes evenly on the screen
+

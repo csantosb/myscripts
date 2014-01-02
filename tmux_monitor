@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# source-file ~/.tmux.conf
+
+# project = monitor
+
+tmux has-session -t monitor
+
+if [ $? != 0 ]
+then
+	tmux new-session -s monitor -n glances -d glances
+	tmux split-window -v -p 1 -t monitor
+	tmux select-pane -U -t monitor
+	tmux split-window -h -t monitor 'htop'
+	# tmux send-keys -t monitor:1.1 'htop' C-m
+	tmux select-pane -L -t monitor
+	tmux send-keys -t monitor:1.3 'df' C-m
+	tmux split-window -h -t monitor 'iptraf-ng'
+	#
+	# tmux new-window -n htop -t mail "htop"
+	# send keys
+	#
+	# tmux send-keys -t monitor:1.2 'htop' C-m
+	# tmux send-keys -t monitor:1.3 'df' C-m
+	# tmux select-pane -L -t monitor
+	# tmux select-layout -t mail:1 main-vertical
+fi
+lxterminal --command="tmux attach -t monitor"
+
+
+
+
+
+
+
+
+#  .even-horizontal stacks all panes horizontally, left to right.
+#  .even-vertical stacks all panes vertically, top to bottom.
+#  .main-horizontal creates one larger pane on the top and smaller panes underneath
+#  .main-vertical creates one large pane on the left side of the screen, and stacks
+#  the rest of the panes vertically on the right
+#  .tiled arranges all panes evenly on the screen
+

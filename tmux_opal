@@ -1,0 +1,26 @@
+#!/usr/sbin/bash
+
+tmux has-session -t opal
+if [ $? != 0 ]
+then
+    # win editor
+    tmux new-session -n editor -s opal -d "TERM=xterm-256color; emacsclient -t -a ''$* ~/Dropbox/eclipse_workspace_lin/PyFrontPanel/src/main.py"
+    # win compilation
+    tmux new-window -n compile -t opal
+    tmux split-window -v -p 20 -t opal:2
+    #
+    tmux send-keys -t opal:2.1 "cd ~/Documents/ciemat/OpalKelly_FrontPanel/ISE_Projects/FrontPanel_XEM6006-LX16_ise_14_2/xem_6006/MyProc/SDK/eclipse_workspace/FirstLedsTests/Debug/" C-m
+    tmux send-keys -t opal:2.1 "PATH=$PATH:/programs/Xilinx/14.2/ISE_DS/EDK/gnu/microblaze/lin/bin/" C-m
+    tmux send-keys -t opal:2.1 "make clean; make" C-m
+    #
+    tmux send-keys -t opal:2.2 "cd ~/Documents/ciemat/OpalKelly_FrontPanel/ISE_Projects/FrontPanel_XEM6006-LX16_ise_14_2/" C-m
+    tmux send-keys -t opal:2.2 "./update.sh" C-m
+    #
+    # execution
+    tmux new-window -n execute -t opal
+    #
+    tmux send-keys -t opal:3.1 "cd ~/Dropbox/eclipse_workspace_lin/PyFrontPanel/src/" C-m
+    tmux send-keys -t opal:3.1 "ipython main.py"
+    #
+fi
+tmux attach -t opal

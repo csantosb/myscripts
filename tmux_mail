@@ -1,0 +1,50 @@
+#!/bin/bash
+
+_mymachine="$(uname -n)"
+
+tmux has-session -t mail
+if [ $? != 0 ]
+then
+    case $_mymachine in
+	    laptop.home.arch)
+            TERM=xterm-256color
+            echo -ne '\033]12;10\007'
+	        tmux new-session -s mail -n mel_GMAIL -d "TERM=xterm-256color ; mutt -F $HOME/.mutt/muttrc_inventati_offline"
+	        ;;
+	    arch.home.rasp_pi)
+	        tmux new-session -s mail -n mel_GMAIL -d "TERM=xterm-256color ; mutt -F $HOME/.mutt/muttrc_perso"
+	        ;;
+	    uinpc4)
+            TERM=xterm-256color
+            echo -ne '\033]12;10\007'
+	        tmux new-session -s mail -n mel_CIEMAT -d "TERM=xterm-256color ; mutt -F $HOME/.mutt/muttrc_ciemat"
+	        tmux new-window -n mel_GMAIL -t mail "TERM=xterm-256color ; mutt -F $HOME/.mutt/muttrc_perso"
+	        ;;
+	    *) ;;
+    esac
+    # tmux split-window -v -p 40 -t mail "TERM=xterm-256color ; mutt -F $HOME/.mutt/muttrc_curro"
+    # tmux split-window -h -t mail "TERM=xterm-256color ; mutt -F $HOME/.mutt/muttrc_otra"
+    # tmux select-pane -U -t mail
+    # tmux select-window -t mail:1
+    #
+    # tmux send-keys -t mail:1.1 'mci' C-m
+    # tmux send-keys -t mail:1.2 'mp' C-m
+    # tmux select-layout -t mail main-horizontal
+fi
+# lxterminal --command="tmux attach -t mail"
+tmux -2 attach -t mail
+# urxvt -e tmux attach -t mail
+
+
+
+
+
+
+
+#  .even-horizontal stacks all panes horizontally, left to right.
+#  .even-vertical stacks all panes vertically, top to bottom.
+#  .main-horizontal creates one larger pane on the top and smaller panes underneath
+#  .main-vertical creates one large pane on the left side of the screen, and stacks
+#  the rest of the panes vertically on the right
+#  .tiled arranges all panes evenly on the screen
+

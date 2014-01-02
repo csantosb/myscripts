@@ -1,0 +1,2 @@
+#!/bin/bash
+emacsclient -s IRC -c --eval "(irc_w_arrangement)" $* || (emacs --daemon=IRC && emacsclient -s IRC -c --eval "(progn (check_x_mode)(irc nil)(elfeed))" $*)

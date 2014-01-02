@@ -1,0 +1,28 @@
+#!/usr/sbin/bash
+# cd /home/csantos
+# source ~/.bashrc
+
+#TERM=xterm-256color
+#tmux new -n T1 -s emacs "TERM=xterm-256color; emacsclient -t -a '' $*"
+
+# tmux new -n T1 -s emacs "TERM="xterm-256color"; emacsclient -t -a '' $*"
+# lxterminal --command="tmux -2 new -n T1 -s emacs"
+
+# tmux has-session -t emacs
+# if [ $? != 0 ]
+# then
+#     #    tmux -2 new -n T1 -s emacs "TERM=xterm-256color ; ~/Dropbox/scripts/em"
+#     tmux -2 new -n T1 -s emacs -d "~/Dropbox/scripts/em"
+# fi
+# lxterminal --command="tmux -2 attach -t emacs"
+
+tmux has-session -t EMACS_FIREFOX
+if [ $? != 0 ]
+then
+    TERM=xterm-256color
+    echo -ne '\033]12;10\007'
+    tmux new -n em -s EMACS_FIREFOX "TERM=xterm-256color; emacsclient -t -a '' $*"
+else
+    tmux attach -t EMACS_FIREFOX
+fi
+

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# cd /home/csantos
+# source ~/.bashrc
+
+# export TERM=screen-256color
+
+tmux has-session -t MAIN
+if [ $? != 0 ]
+then
+    TERM=xterm-256color
+    echo -ne '\033]12;10\007'
+    tmux -2 new -n T1 -s MAIN -d
+fi
+tmux -2 attach -t MAIN

@@ -1,0 +1,4 @@
+#!/bin/bash
+#source ~/.bashrc
+TERM="screen-256color"
+newsbeuter -c /tmp/newsbeuter/nb_cache.db
